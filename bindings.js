@@ -57,8 +57,10 @@ var fs = require('fs'),
       ['module_root', 'lib', 'binding', 'nodePreGyp', 'bindings'],
 
       //chenshi customed parts
-      //??????????bin???????
-      ['module_root', 'bin', 'bindings']
+      //?add bin directory to search path
+      ['module_root', 'bin', 'bindings'],
+      //add root directory to search path
+      ['module_root', '.', 'bindings']
     ]
   };
 
@@ -87,7 +89,8 @@ function bindings(opts) {
   }
 
   // Ensure the given bindings name ends with .node
-  if (path.extname(opts.bindings) != '.node') {
+  // let bindings add find .js file
+  if (!(['.node', '.js'].includes(path.extname(opts.bindings)))) {
     opts.bindings += '.node';
   }
 
